@@ -7,6 +7,9 @@ namespace TaskMaster.Models
 {
     public class TaskItem
     {
+        //Unique ID
+        public int Id { get; set; }
+
         //Timestamp when the TaskItem is created
         public int Created { get; }
 
