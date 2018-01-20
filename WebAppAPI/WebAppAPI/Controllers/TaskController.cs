@@ -36,6 +36,7 @@ namespace WebAppAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Tasks value)
         {
+            value.Time = DateTime.Now;
             await _context.AllTasks.AddAsync(value);
             await _context.SaveChangesAsync();
             return CreatedAtAction("Get", new { value.Id }, value);
@@ -43,9 +44,11 @@ namespace WebAppAPI.Controllers
 
         // PUT: api/<controller>/{id}
         [HttpPut("{id:int}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Tasks value)
         {
-            _context.Update(value);
+            value.Id = id;
+            value.Time = DateTime.Now;
+            _context.AllTasks.Update(value);
             _context.SaveChanges();
         }
 
@@ -53,7 +56,8 @@ namespace WebAppAPI.Controllers
         [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
-            _context.Remove(_context.AllTasks.FirstOrDefault(x => x.Id == id));
+            Tasks deleteTask = _context.AllTasks.FirstOrDefault(x => x.Id == id);
+            _context.AllTasks.Remove(deleteTask);
             _context.SaveChanges();
         }
     }
