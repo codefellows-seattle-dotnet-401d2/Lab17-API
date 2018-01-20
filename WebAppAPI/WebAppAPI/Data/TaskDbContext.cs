@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAppAPI.Model;
+using WebAppAPI.Models;
 
 namespace WebAppAPI.Data
 {
@@ -11,9 +11,9 @@ namespace WebAppAPI.Data
     {
         public TaskDbContext(DbContextOptions<TaskDbContext> options) : base(options)
         {
-
+            
         }
 
-        internal DbSet<Model.Task> TaskTable { get; set; }
+        internal DbSet<Tasks> AllTasks { get; set; }
     }
 }

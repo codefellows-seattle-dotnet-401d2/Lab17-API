@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAppAPI.Model
+namespace WebAppAPI.Models
 {
-    public class Task
+    public class Tasks
     {
         public int Id { get; set; }
         public string Title { get; set; }

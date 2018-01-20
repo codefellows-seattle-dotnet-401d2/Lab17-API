@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace WebAppAPI.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initial3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TaskTable",
+                name: "AllTasks",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -21,14 +21,14 @@ namespace WebAppAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskTable", x => x.Id);
+                    table.PrimaryKey("PK_AllTasks", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TaskTable");
+                name: "AllTasks");
         }
     }
 }

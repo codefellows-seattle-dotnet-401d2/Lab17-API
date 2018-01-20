@@ -11,8 +11,8 @@ using WebAppAPI.Data;
 namespace WebAppAPI.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    [Migration("20180120040310_Initial")]
-    partial class Initial
+    [Migration("20180120044137_Initial3")]
+    partial class Initial3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace WebAppAPI.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAppAPI.Model.Task", b =>
+            modelBuilder.Entity("WebAppAPI.Models.Tasks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -34,7 +34,7 @@ namespace WebAppAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaskTable");
+                    b.ToTable("AllTasks");
                 });
 #pragma warning restore 612, 618
         }
