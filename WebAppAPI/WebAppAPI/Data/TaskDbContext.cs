@@ -14,6 +14,6 @@ namespace WebAppAPI.Data
             
         }
 
-        internal DbSet<Tasks> AllTasks { get; set; }
+        public DbSet<Tasks> AllTasks { get; set; }
     }
 }
