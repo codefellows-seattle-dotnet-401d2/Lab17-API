@@ -91,6 +91,29 @@ namespace XUnitTestAPI
         }
 
         [Fact]
+        public void PutTask()
+        {
+            using (_context = new TaskDbContext(options))
+            {
+                List<Tasks> testTasks = GetTestTasks();
+                foreach (Tasks x in testTasks)
+                {
+                    _context.AllTasks.Add(x);
+                }
+                _context.SaveChanges();
+                testTasks[0].Title = "Eek Help! Oh no, Molly.";
+
+                // Arrange
+                TaskController controller = new TaskController(_context);
+                // Act
+                controller.Put(1, testTasks[0]);
+                Tasks resultGet = controller.Get(1);
+                // Assert
+                Assert.Equal(testTasks[0], resultGet);
+            }
+        }
+
+        [Fact]
         public void DeleteTask()
         {
             using (_context = new TaskDbContext(options))
