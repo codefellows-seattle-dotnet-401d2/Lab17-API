@@ -57,8 +57,11 @@ namespace WebAppAPI.Controllers
         public void Delete(int id)
         {
             Tasks deleteTask = _context.AllTasks.FirstOrDefault(x => x.Id == id);
-            _context.AllTasks.Remove(deleteTask);
-            _context.SaveChanges();
+            if (deleteTask != null)
+            {
+                _context.AllTasks.Remove(deleteTask);
+                _context.SaveChanges();
+            }
         }
     }
 }
