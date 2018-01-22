@@ -14,6 +14,6 @@ namespace TaskSaver.Data
 
         }
 
-        internal DbSet<Models.Task> TaskList { get; set; }
+        public DbSet<Models.Task> TaskList { get; set; }
     }
 }

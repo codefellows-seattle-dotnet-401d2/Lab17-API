@@ -18,6 +18,7 @@ namespace TaskSaver.Controllers
         {
             _context = context;
         }
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<Models.Task> Get()
@@ -43,15 +44,45 @@ namespace TaskSaver.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Models.Task value)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //check id exists in the database
+            var result = _context.TaskList.FirstOrDefault(x => x.ID == id);
+            if (result != null)
+            {
+                //result.ID = id;
+                result.Title = value.Title;
+                result.Description = value.Description;
+                _context.Update(result);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                await Post(value);
+            }
+
+            return Ok();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+
+            var result = _context.TaskList.FirstOrDefault(x => x.ID == id);
+
+            if (result != null)
+            {
+                _context.Remove(result);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
