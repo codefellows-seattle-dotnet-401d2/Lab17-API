@@ -21,7 +21,7 @@ namespace TaskMaster.Controllers
             _context = context;
         }
 
-        //Create
+        //Create todo
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]TaskItem taskItem)
         {
@@ -30,44 +30,49 @@ namespace TaskMaster.Controllers
             return CreatedAtAction("Get", new { taskItem.Id }, taskItem);
         } 
 
-        //Read
+        //Get all COMPLETE
         [HttpGet]
-        public List<TaskItem> Get()
-        {
-            return _context.TaskItems.ToList();
-        }
+        public List<TaskItem> Get() => _context.TaskItems.ToList();
 
-        [HttpGet("{id}")]
+        //Get one todo
+        [HttpGet("{id:int}")]
         public TaskItem Get(int Id)
         {
             return _context.TaskItems.FirstOrDefault(taskitem => taskitem.Id == Id);
         }
 
-        //Update
-        //public TaskItem Put([FromBody]TaskItem taskItem)
-        //{
-        //    if(_context.TaskItems.Where(taskitem => taskitem.Id == taskItem.Id).ToList().Count > 0)
-        //    {
-        //        TaskItem task_item = _context.TaskItems.FirstOrDefault(taskitem => taskitem.Id == taskItem.Id);
-        //        _context.TaskItems.Update(task_item);
-        //        _context.SaveChangesAsync();
-        //        return ;
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-
-
-        //Delete
-        [HttpDelete("{id}")]
-        public CreatedAtActionResult Delete(int Id)
+        //Update todo
+        public StatusCodeResult Put([FromBody]TaskItem taskItem)
         {
-            TaskItem taskItem = _context.TaskItems.FirstOrDefault(taskitem => taskitem.Id == Id);
-            _context.TaskItems.Remove(taskItem);
-            _context.SaveChangesAsync();
-            return CreatedAtAction("Get", new { taskItem.Id }, taskItem);
+            if(_context.TaskItems.Where(task => task.Id == taskItem.Id).ToList().Count > 0)
+            {
+                TaskItem task_item = _context.TaskItems.FirstOrDefault(taskitem => taskitem.Id == taskItem.Id);
+                _context.TaskItems.Update(task_item);
+                _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
+
+
+        //Delete todo
+        [HttpDelete("{id:int}")]
+        public StatusCodeResult Delete(int Id)
+        {
+            if (_context.TaskItems.Where(taskitem => taskitem.Id == Id).ToList().Count > 0)
+            {
+                TaskItem taskItem = _context.TaskItems.FirstOrDefault(taskitem => taskitem.Id == Id);
+                _context.TaskItems.Remove(taskItem);
+                _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
         }
     }
 }

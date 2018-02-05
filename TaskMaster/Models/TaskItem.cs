@@ -8,24 +8,28 @@ namespace TaskMaster.Models
     public class TaskItem
     {
         //Unique ID
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         //Timestamp when the TaskItem is created
-        public int Created { get; }
+        public long Created { get; }
 
         //Optional "Must be complete by" timestamp
-        public int DueBy { get; set; }
+        public long DueBy { get; set; }
 
         //Optional time to remind the user
-        public int RemindAt { get; set; }
+        public long RemindAt { get; set; }
 
         //Required description
         public string Description { get; set; }
 
-
-        public TaskItem(String Description)
+        public TaskItem()
         {
+            Id = null;
+            Created = ToUnixTimestampTicks();
 
         }
+        
+        public static long ToUnixTimestampTicks() => new DateTime().ToUniversalTime().Ticks - UnixEpochTicks;
+        private static readonly long UnixEpochTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
     }
 }
